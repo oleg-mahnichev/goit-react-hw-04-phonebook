@@ -5,7 +5,6 @@ import Filter from './Filter/Filter';
 import { HeaderTitle, ContactsTitle } from './Header.style';
 
 export const App = () => {
-  // Створення стейту для контактів та фільтра
   const [contacts, setContacts] = useState(
     () =>
       JSON.parse(localStorage.getItem('contacts')) ?? [
@@ -17,12 +16,10 @@ export const App = () => {
   );
   const [filter, setFilter] = useState('');
 
-  // Збереження контактів в локальне сховище при оновленні стану контактів
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  // Перевірка, чи існує контакт з таким ім'ям
   const isNameAlreadyExists = name => {
     const lowerCaseName = name.toLowerCase();
     return contacts.some(
@@ -30,24 +27,20 @@ export const App = () => {
     );
   };
 
-  // Додавання нового контакту
   const addContact = newContact => {
     setContacts(prevContacts => [...prevContacts, newContact]);
   };
 
-  // Видалення контакту за ідентифікатором
   const deleteContact = contactId => {
     setContacts(prevContacts =>
       prevContacts.filter(contact => contact.id !== contactId)
     );
   };
 
-  // Зміна фільтру
   const changeFilter = event => {
     setFilter(event.target.value);
   };
 
-  // Фільтрація контактів на основі фільтра
   const getFilteredContacts = () => {
     const normalizedFilter = filter.toLowerCase();
     return contacts.filter(contact =>
